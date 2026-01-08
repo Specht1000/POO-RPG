@@ -358,11 +358,26 @@ void Game::chooseClass()
     cout << "Choisissez une classe:\n";
     cout << "1. Chevalier 🛡️ (HP haut, Force)\n";
     cout << "2. Sorcier 🧙 (MP haut, Magie)\n";
-    cout << "3. Voleur 🗡️ (Dex/Luck)\n";
-    cout << "Choix: ";
+    cout << "3. Archer 🏹 (Dex, critiques)\n";
+    cout << "4. Voleur 🗡️ (Dex/Luck)\n";
 
-    int choice;
-    cin >> choice;
+    int choice = 0;
+
+    while (true) {
+        cout << "Choix: ";
+        cin >> choice;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "Entrée invalide.\n";
+            continue;
+        }
+
+        if (choice >= 1 && choice <= 4) break;
+
+        cout << "Choix invalide.\n";
+    }
 
     player.applyClass(choice);
 
