@@ -16,6 +16,7 @@ Player::Player()
     this->x = 0;
     this->y = 0;
     this->mana = 50;
+    skipNextTurn = false;
 
     attacks.clear();
     attacks.push_back(Attack("Attaque légère", 10, 0, LIGHT));
@@ -56,10 +57,6 @@ void Player::attack(Entity& enemy) {
 bool Player::useLuck() {
     int roll = Dice::roll(6);
     return roll <= this->luck;
-}
-
-void Player::addGold(int amount) {
-    this->gold += amount;
 }
 
 Inventory& Player::getInventory() {
@@ -152,4 +149,189 @@ bool Player::useMana(int cost)
         return false;
     mana -= cost;
     return true;
+}
+
+bool Player::mustSkipTurn() const
+{
+    return skipNextTurn;
+}
+
+void Player::setSkipTurn(bool value)
+{
+    skipNextTurn = value;
+}
+
+string Player::getClassName() const
+{
+    return className;
+}
+
+void Player::applyClass(int choice)
+{
+    // default
+    className = "Chevalier";
+
+    // base stats (vai ser sobrescrito no switch)
+    life = 100;
+    strength = 10;
+    dexterity = 5;
+    luck = 5;
+    mana = 50;
+    skipNextTurn = false;
+
+    attacks.clear();
+
+    // 1 Chevalier, 2 Sorcier, 3 Archer, 4 Voleur
+    switch (choice) {
+    case 1: // 🛡️ Chevalier
+        className = "Chevalier";
+        emoji = "🛡️";
+        life = 130;
+        strength = 16;
+        dexterity = 6;
+        luck = 4;
+        mana = 25;
+
+        attacks.push_back(Attack("Coup léger", 12, 0, LIGHT));
+        attacks.push_back(Attack("Coup lourd", 32, 0, HEAVY));
+        attacks.push_back(Attack("Coup sacré", 22, 10, MAGIC));
+        break;
+
+    case 2: // 🔮 Sorcier
+        className = "Sorcier";
+        emoji = "🧙‍♂️";
+        life = 90;
+        strength = 7;
+        dexterity = 6;
+        luck = 6;
+        mana = 90;
+
+        attacks.push_back(Attack("Bâton", 9, 0, LIGHT));
+        attacks.push_back(Attack("Incantation", 18, 0, HEAVY));
+        attacks.push_back(Attack("Boule de feu", 45, 20, MAGIC));
+        break;
+
+    case 3: // 🏹 Archer
+        className = "Archer";
+        emoji = "🏹";
+        life = 105;
+        strength = 12;
+        dexterity = 12;
+        luck = 6;
+        mana = 35;
+
+        attacks.push_back(Attack("Flèche rapide", 11, 0, LIGHT));
+        attacks.push_back(Attack("Tir chargé", 28, 0, HEAVY));
+        attacks.push_back(Attack("Flèche élémentaire", 26, 12, MAGIC));
+        break;
+
+    case 4: // 🗡️ Voleur
+        className = "Voleur";
+        emoji = "🗡️";
+        life = 95;
+        strength = 11;
+        dexterity = 14;
+        luck = 10;
+        mana = 30;
+
+        attacks.push_back(Attack("Coup furtif", 10, 0, LIGHT));
+        attacks.push_back(Attack("Backstab", 26, 0, HEAVY));
+        attacks.push_back(Attack("Poison", 20, 10, MAGIC));
+        break;
+
+    default:
+        // se input errado, mantém Chevalier
+        className = "Chevalier";
+        life = 130;
+        strength = 16;
+        dexterity = 6;
+        luck = 4;
+        mana = 25;
+
+        attacks.push_back(Attack("Coup léger", 12, 0, LIGHT));
+        attacks.push_back(Attack("Coup lourd", 32, 0, HEAVY));
+        attacks.push_back(Attack("Coup sacré", 22, 10, MAGIC));
+        break;
+    }
+}
+
+string Player::getEmoji() const { return emoji; }
+
+void Player::useItem(int index)
+{
+    if (index < 0 || index >= inventory.size()) {
+        cout << "Objet invalide.\n";
+        return;
+    }
+
+    Item it = inventory.getItem(index);
+
+    if (it.getType() == BONUS_LIFE) {
+        life += it.getValue();
+        cout << "Vie augmentée de +" << it.getValue() << " !\n";
+    }
+    else if (it.getType() == BONUS_DAMAGE) {
+        boostDamage(it.getValue());
+        cout << "Dégâts augmentés de +" << it.getValue() << " !\n";
+    }
+
+    inventory.remove(index);
+}
+
+int Player::getGold() const
+{
+    return gold;
+}
+
+void Player::addGold(int amount)
+{
+    gold += amount;
+    if (gold < 0) gold = 0;
+}
+
+void Player::useItemFromInventory(int index)
+{
+    // index esperado: 0..size-1
+    if (index < 0 || index >= inventory.size()) {
+        cout << "Indice invalide." << endl;
+        return;
+    }
+
+    Item it = inventory.getItem(index);
+
+    cout << "Vous utilisez: " << it.getName()
+         << " -> " << it.getDescription() << endl;
+
+    // Aplica efeito
+    if (it.getType() == BONUS_LIFE) {
+        life += it.getValue();
+        cout << "HP + " << it.getValue() << endl;
+    }
+    else if (it.getType() == BONUS_DAMAGE) {
+        boostDamage(it.getValue());
+        cout << "Dégâts + " << it.getValue() << endl;
+    }
+
+    // remove do inventário
+    inventory.remove(index);
+}
+
+int& Player::goldRef()
+{
+    return gold;
+}
+
+void Player::addItemToInventory(const Item& it)
+{
+    inventory.addItem(it); // ⚠️ TROQUE addItem para o método real do seu Inventory
+}
+
+int Player::getDexterity() const
+{
+    return dexterity;
+}
+
+int Player::getLuck() const
+{
+    return luck;
 }

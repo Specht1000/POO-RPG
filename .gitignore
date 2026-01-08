@@ -4,6 +4,7 @@ rpg
 
 # editor
 .vscode/
+.vs
 
 # system
 *.o

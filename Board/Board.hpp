@@ -23,6 +23,8 @@ public:
     void loadFromFile(const string& filename);
     void display() const;
 
+    void setHeroEmoji(const string& e);
+
     char getCell(int x, int y) const;
     void setCell(int x, int y, char c);
 

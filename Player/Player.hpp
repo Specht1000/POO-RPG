@@ -19,6 +19,10 @@ private:
     int y;
     vector<Attack> attacks;
     int mana;
+    bool skipNextTurn;
+    string className;
+    string emoji;
+
 
 public:
     Player();                    // construtor padrão
@@ -46,6 +50,27 @@ public:
 
     int getMana() const;
     bool useMana(int cost);
+
+    bool mustSkipTurn() const;
+    void setSkipTurn(bool value);
+
+    void applyClass(int choice);
+    string getClassName() const;
+    string getEmoji() const;
+
+    void useItem(int index);
+
+    int getGold() const;
+
+    // ✅ usar item por índice (fora do combate)
+    void useItemFromInventory(int index);
+
+    int& goldRef();
+
+    void addItemToInventory(const Item& it);
+
+    int getDexterity() const;
+    int getLuck() const;
 };
 
 #endif

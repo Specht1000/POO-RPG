@@ -10,13 +10,19 @@ using namespace std;
 
 class Enemy : public Entity {
 private:
-    int rewardGold;
+    string race;
+    string emoji;
+
     vector<Attack> attacks;
+    int rewardGold;
 
 public:
     Enemy(const string& race);
 
+    string getRace() const;
+    string getEmoji() const;
     int getReward() const;
+
     Attack randomAttack() const;
 };
 

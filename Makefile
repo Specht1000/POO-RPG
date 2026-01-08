@@ -6,7 +6,7 @@ CXXFLAGS = -Wall -Wextra -std=c++17
 TARGET = rpg
 
 # ===== Directories =====
-SRC_DIRS = Board Dice Enemy Entity Game Inventory Item Player Main Input Attack
+SRC_DIRS = Board Dice Enemy Entity Game Inventory Item Player Main Input Attack Merchant
 OBJ_DIR = obj
 
 # ===== Sources =====

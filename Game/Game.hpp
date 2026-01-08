@@ -3,6 +3,8 @@
 
 #include "Player.hpp"
 #include "Board.hpp"
+#include "Merchant.hpp"
+#include "Dice.hpp"
 #include <string>
 
 using namespace std;
@@ -14,21 +16,29 @@ class Game {
 private:
     Player player;
     Board board;
+    Merchant merchant;
+    bool justInteracted;
 
 public:
     Game();
 
     void run();
     void loop();
+    void doTurnMenu();
+    void moveWithDice();
+    void openMerchant();
+    void useItemMenu();
     void loadMap(const string& filename);
-    void movePlayer(int dx, int dy);
+    bool movePlayer(int dx, int dy);
 
-    void combat(Enemy& enemy);   // agora OK
+    void combat(Enemy& enemy);
     Item generateRandomItem();
 
     void checkEndGame();
     void showVictory();
     void showGameOver();
+
+    void chooseClass();
 };
 
 #endif
