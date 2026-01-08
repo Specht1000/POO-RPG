@@ -4,8 +4,7 @@ Item::Item(ItemType type, int value)
 {
     this->type = type;
     this->value = value;
-
-    // defaults p/ não quebrar nada
+    // defaults
     this->name = "Objet";
     this->price = 0;
 }
@@ -18,11 +17,25 @@ Item::Item(string name, ItemType type, int value, int price)
     this->price = price;
 }
 
-ItemType Item::getType() const { return type; }
-int Item::getValue() const { return value; }
+ItemType Item::getType() const 
+{ 
+    return type; 
+}
 
-string Item::getName() const { return name; }
-int Item::getPrice() const { return price; }
+int Item::getValue() const 
+{ 
+    return value; 
+}
+
+string Item::getName() const 
+{ 
+    return name; 
+}
+
+int Item::getPrice() const 
+{ 
+    return price; 
+}
 
 string Item::getDescription() const
 {

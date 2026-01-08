@@ -4,7 +4,11 @@
 #include "Player.hpp"
 #include "Board.hpp"
 #include "Merchant.hpp"
+#include "Enemy.hpp"
 #include "Dice.hpp"
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include <string>
 
 using namespace std;

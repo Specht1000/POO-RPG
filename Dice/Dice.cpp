@@ -1,5 +1,4 @@
 #include "Dice.hpp"
-#include <cstdlib>
 
 int Dice::roll(int max)
 {

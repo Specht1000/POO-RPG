@@ -1,6 +1,4 @@
 #include "Player.hpp"
-#include "Dice.hpp"
-#include <iostream>
 
 using namespace std;
 
@@ -323,7 +321,7 @@ int& Player::goldRef()
 
 void Player::addItemToInventory(const Item& it)
 {
-    inventory.addItem(it); // ⚠️ TROQUE addItem para o método real do seu Inventory
+    inventory.addItem(it);
 }
 
 int Player::getDexterity() const

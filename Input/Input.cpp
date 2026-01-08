@@ -1,7 +1,4 @@
 #include "Input.hpp"
-#include <termios.h>
-#include <unistd.h>
-#include <cstdio>
 
 static struct termios oldt;
 static struct termios newt;

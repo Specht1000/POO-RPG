@@ -3,9 +3,11 @@
 
 #include "Entity.hpp"
 #include "Inventory.hpp"
+#include "Dice.hpp"
+#include "Attack.hpp"
+#include <iostream>
 #include <string>
 #include <vector>
-#include "Attack.hpp"
 
 using namespace std;
 
@@ -25,14 +27,14 @@ private:
 
 
 public:
-    Player();                    // construtor padrão
-    Player(const string& name);  // construtor com nome
+    Player();
+    Player(const string& name);
 
     void attack(Entity& enemy);
     bool useLuck();
 
-    void addGold(int amount);          // ← FALTAVA
-    Inventory& getInventory();         // ← FALTAVA
+    void addGold(int amount);
+    Inventory& getInventory();
 
     void setPosition(int x, int y);
     int getX() const;
@@ -62,7 +64,6 @@ public:
 
     int getGold() const;
 
-    // ✅ usar item por índice (fora do combate)
     void useItemFromInventory(int index);
 
     int& goldRef();

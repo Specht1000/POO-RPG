@@ -20,7 +20,6 @@ private:
 
 public:
     Attack(const string& name, int damage, int manaCost, AttackType type);
-
     string getName() const;
     int getDamage() const;
     int getManaCost() const;

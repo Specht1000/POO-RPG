@@ -1,8 +1,6 @@
 #include "Enemy.hpp"
-#include <cstdlib>
 
-Enemy::Enemy(const string& r)
-    : Entity("", 0, 0)
+Enemy::Enemy(const string& r) : Entity("", 0, 0)
 {
     race = r;
     attacks.clear();
@@ -63,9 +61,20 @@ Enemy::Enemy(const string& r)
     }
 }
 
-string Enemy::getRace() const { return race; }
-string Enemy::getEmoji() const { return emoji; }
-int Enemy::getReward() const { return rewardGold; }
+string Enemy::getRace() const 
+{ 
+    return race; 
+}
+
+string Enemy::getEmoji() const 
+{ 
+    return emoji;
+}
+
+int Enemy::getReward() const 
+{ 
+    return rewardGold; 
+}
 
 Attack Enemy::randomAttack() const
 {

@@ -1,12 +1,8 @@
 #include "Game.hpp"
-#include "Enemy.hpp"
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
 
 Game::Game()
 {
-    srand(time(nullptr));
+    srand(time(nullptr)); // RNG start
     justInteracted = false;
     loadMap("Maps/Map3.txt");
 
@@ -181,7 +177,6 @@ bool Game::movePlayer(int dx, int dy)
     if (cell == '#')
         return false;
 
-    // --- ENNEMI: combat avant de bouger ---
     if (cell == 'E' || cell == 'G' || cell == 'N' || cell == 'O' || cell == 'S') {
         string race = "Gobelin";
         if (cell == 'G') race = "Gobelin";
@@ -202,13 +197,11 @@ bool Game::movePlayer(int dx, int dy)
             return false;
         }
 
-        // ennemi vaincu -> on enlève de la carte et on continue le move
         board.setCell(nx, ny, '.');
         player.addGold(enemy.getReward());
         checkEndGame();
     }
 
-    // move hero (le Board rend l'emoji)
     board.setCell(player.getX(), player.getY(), '.');
     player.setPosition(nx, ny);
     board.setCell(nx, ny, 'H');
@@ -294,7 +287,6 @@ void Game::combat(Enemy& enemy)
                     skipPlayerNextTurn = true;
                 }
 
-                // chance (PDF): possibilité d'ajouter des dégâts via chance
                 int bonus = 0;
                 if (rand() % 100 < player.getLuck() * 5) bonus = 3 + rand() % 6;
 
@@ -308,7 +300,6 @@ void Game::combat(Enemy& enemy)
         if (!enemy.isAlive())
             break;
 
-        // Enemy turn
         Attack enemyAtk = enemy.randomAttack();
         player.takeDamage(enemyAtk.getDamage());
         cout << "L'ennemi attaque: " << enemyAtk.getName()
@@ -381,7 +372,6 @@ void Game::chooseClass()
 
     player.applyClass(choice);
 
-    // sync emoji du héros avec le Board
     board.setHeroEmoji(player.getEmoji());
 
     cout << "\nClasse choisie: " << player.getClassName() << " " << player.getEmoji() << "\n";

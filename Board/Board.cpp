@@ -38,6 +38,7 @@ string Board::symbolToEmoji(char c) const
     switch (c) {
         case 'H': return heroEmoji;
 
+        // Mapping
         // ennemis (races)
         case 'G': return "👺"; // Gobelin
         case 'N': return "🧌"; // Gnome
@@ -68,14 +69,14 @@ void Board::setHeroEmoji(const string& e)
 
 char Board::getCell(int x, int y) const
 {
-    if (!isInside(x, y)) return '#';
+    if (!isInside(x, y)) return '#'; // detects out of bounds and caracter position 
     return map[y][x];
 }
 
 void Board::setCell(int x, int y, char c)
 {
     if (!isInside(x, y)) return;
-    map[y][x] = c;
+    map[y][x] = c; // modifies the character at position (x, y) to c
 }
 
 int Board::getWidth() const
