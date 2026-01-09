@@ -1,0 +1,223 @@
+@startuml
+title POO-RPG — UML (C++)
+
+skinparam classAttributeIconSize 0
+hide empty members
+
+' =========================
+' ENUMS
+' =========================
+enum AttackType {
+  LIGHT
+  HEAVY
+  MAGIC
+}
+
+enum ItemType {
+  BONUS_LIFE
+  BONUS_DAMAGE
+}
+
+' =========================
+' CLASSES
+' =========================
+class Entity {
+  # name : string
+  # life : int
+  # strength : int
+
+  + Entity(name: string, life: int, strength: int)
+  + ~Entity()
+  + isAlive() : bool
+  + getLife() : int
+  + getStrength() : int
+  + takeDamage(dmg: int) : void
+}
+
+class Player {
+  - dexterity : int
+  - luck : int
+  - gold : int
+  - inventory : Inventory
+  - x : int
+  - y : int
+  - attacks : vector<Attack>
+  - mana : int
+  - skipNextTurn : bool
+  - className : string
+  - emoji : string
+
+  + Player()
+  + Player(name: string)
+  + attack(enemy: Entity&) : void
+  + useLuck() : bool
+  + addGold(amount: int) : void
+  + getInventory() : Inventory&
+  + setPosition(x: int, y: int) : void
+  + getX() : int
+  + getY() : int
+  + getLife() : int
+  + takeDamage(dmg: int) : void
+  + isAlive() : bool
+  + showAttacks() : void
+  + chooseAttack(index: int) : Attack
+  + heal(amount: int) : void
+  + boostDamage(amount: int) : void
+  + getMana() : int
+  + useMana(cost: int) : bool
+  + mustSkipTurn() : bool
+  + setSkipTurn(value: bool) : void
+  + applyClass(choice: int) : void
+  + getClassName() : string
+  + getEmoji() : string
+  + useItem(index: int) : void
+  + getGold() : int
+  + useItemFromInventory(index: int) : void
+  + goldRef() : int&
+  + addItemToInventory(it: Item) : void
+  + getDexterity() : int
+  + getLuck() : int
+}
+
+class Enemy {
+  - race : string
+  - emoji : string
+  - attacks : vector<Attack>
+  - rewardGold : int
+
+  + Enemy(race: string)
+  + getRace() : string
+  + getEmoji() : string
+  + getReward() : int
+  + randomAttack() : Attack
+}
+
+class Attack {
+  - name : string
+  - damage : int
+  - manaCost : int
+  - type : AttackType
+
+  + Attack(name: string, damage: int, manaCost: int, type: AttackType)
+  + getName() : string
+  + getDamage() : int
+  + getManaCost() : int
+  + getType() : AttackType
+}
+
+class Item {
+  - type : ItemType
+  - value : int
+  - name : string
+  - price : int
+
+  + Item(type: ItemType, value: int)
+  + Item(name: string, type: ItemType, value: int, price: int)
+  + getType() : ItemType
+  + getValue() : int
+  + getName() : string
+  + getPrice() : int
+  + getDescription() : string
+}
+
+class Inventory {
+  - items : vector<Item>
+
+  + addItem(item: Item) : void
+  + show() : void
+  + size() : int
+  + getItem(index: int) : Item
+  + remove(index: int) : void
+}
+
+class Merchant {
+  - stock : vector<Item>
+
+  + Merchant()
+  + show() : void
+  + buy(choice: int, playerGold: int&, playerInv: Inventory&) : bool
+}
+
+class Board {
+  - map : vector<string>
+  - heroEmoji : string
+  - enemyEmoji : string
+  - itemEmoji : string
+  - wallEmoji : string
+  - floorEmoji : string
+  - symbolToEmoji(c: char) : string
+
+  + Board()
+  + Board(filename: string)
+  + loadFromFile(filename: string) : void
+  + display() : void
+  + setHeroEmoji(e: string) : void
+  + getCell(x: int, y: int) : char
+  + setCell(x: int, y: int, c: char) : void
+  + getWidth() : int
+  + getHeight() : int
+  + findHero(x: int&, y: int&) : void
+  + countEnemies() : int
+  + isInside(x: int, y: int) : bool
+}
+
+class Dice {
+  + {static} roll(max: int) : int
+}
+
+class Input {
+  + {static} init() : void
+  + {static} restore() : void
+  + {static} getKey() : char
+}
+
+class Game {
+  - player : Player
+  - board : Board
+  - merchant : Merchant
+  - justInteracted : bool
+
+  + Game()
+  + run() : void
+  + loop() : void
+  + doTurnMenu() : void
+  + moveWithDice() : void
+  + openMerchant() : void
+  + useItemMenu() : void
+  + loadMap(filename: string) : void
+  + movePlayer(dx: int, dy: int) : bool
+  + combat(enemy: Enemy&) : void
+  + generateRandomItem() : Item
+  + checkEndGame() : void
+  + showVictory() : void
+  + showGameOver() : void
+  + chooseClass() : void
+}
+
+' =========================
+' RELACIONAMENTOS
+' =========================
+Player --|> Entity
+Enemy  --|> Entity
+
+Player *-- Inventory
+Inventory *-- Item
+
+Player *-- Attack
+Enemy  *-- Attack
+
+Merchant *-- Item
+
+Game *-- Player
+Game *-- Board
+Game *-- Merchant
+
+Game ..> Enemy : combat()
+Game ..> Item  : generateRandomItem()
+Player ..> Item : useItem()
+
+Player ..> Dice
+Game   ..> Dice
+Game   ..> Input
+
+@enduml
