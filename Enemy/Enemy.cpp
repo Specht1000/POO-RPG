@@ -1,6 +1,6 @@
 #include "Enemy.hpp"
 
-Enemy::Enemy(const string& r) : Entity("", 0, 0)
+Enemy::Enemy(const string& r) : Entity("", 0)
 {
     race = r;
     attacks.clear();
@@ -12,7 +12,6 @@ Enemy::Enemy(const string& r) : Entity("", 0, 0)
     if (race == "Gobelin") {
         name = "Gobelin";
         life = 60;
-        strength = 10;
         emoji = "👺";
         rewardGold = 8;
 
@@ -22,7 +21,6 @@ Enemy::Enemy(const string& r) : Entity("", 0, 0)
     else if (race == "Gnome") {
         name = "Gnome";
         life = 50;
-        strength = 8;
         emoji = "🧌";
         rewardGold = 10;
 
@@ -32,7 +30,6 @@ Enemy::Enemy(const string& r) : Entity("", 0, 0)
     else if (race == "Orc") {
         name = "Orc";
         life = 80;
-        strength = 14;
         emoji = "👹";
         rewardGold = 15;
 
@@ -42,7 +39,6 @@ Enemy::Enemy(const string& r) : Entity("", 0, 0)
     else if (race == "Squelette") {
         name = "Squelette";
         life = 55;
-        strength = 9;
         emoji = "💀";
         rewardGold = 12;
 
@@ -52,7 +48,6 @@ Enemy::Enemy(const string& r) : Entity("", 0, 0)
     else {
         name = race;
         life = 55;
-        strength = 9;
         emoji = "👾";
         rewardGold = 10;
 

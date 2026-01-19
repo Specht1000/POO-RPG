@@ -3,12 +3,10 @@
 using namespace std;
 
 Player::Player()
-    : Entity("", 0, 0)
+    : Entity("", 0)
 {
     this->name = "Heros";
     this->life = 100;
-    this->strength = 10;
-    this->dexterity = 5;
     this->luck = 5;
     this->gold = 0;
     this->x = 0;
@@ -20,36 +18,6 @@ Player::Player()
     attacks.push_back(Attack("Attaque légère", 10, 0, LIGHT));
     attacks.push_back(Attack("Attaque lourde", 25, 0, HEAVY));
     attacks.push_back(Attack("Sort magique", 35, 15, MAGIC));
-}
-
-Player::Player(const string& name)
-    : Entity("", 0, 0)
-{
-    this->name = name;
-    this->life = 100;
-    this->strength = 10;
-    this->dexterity = 5;
-    this->luck = 5;
-    this->gold = 0;
-    this->x = 0;
-    this->y = 0;
-    this->mana = 50;
-
-    attacks.clear();
-    attacks.push_back(Attack("Attaque légère", 10, 0, LIGHT));
-    attacks.push_back(Attack("Attaque lourde", 25, 0, HEAVY));
-    attacks.push_back(Attack("Sort magique", 35, 15, MAGIC));
-}
-
-void Player::attack(Entity& enemy) {
-    int damage = this->strength;
-
-    if (useLuck()) {
-        damage += Dice::roll(6);
-        cout << "Chance utilisée ! Dégâts augmentés." << endl;
-    }
-
-    enemy.takeDamage(damage);
 }
 
 bool Player::useLuck() {
@@ -119,7 +87,7 @@ Attack Player::chooseAttack(int index)
 void Player::heal(int amount)
 {
     this->life += amount;
-    if (this->life > 150)   // limite max (optionnel)
+    if (this->life > 150)   // limite max
         this->life = 150;
 }
 
@@ -171,8 +139,6 @@ void Player::applyClass(int choice)
 
     // base stats (vai ser sobrescrito no switch)
     life = 100;
-    strength = 10;
-    dexterity = 5;
     luck = 5;
     mana = 50;
     skipNextTurn = false;
@@ -185,8 +151,6 @@ void Player::applyClass(int choice)
         className = "Chevalier";
         emoji = "🛡️";
         life = 130;
-        strength = 16;
-        dexterity = 6;
         luck = 4;
         mana = 25;
 
@@ -199,8 +163,6 @@ void Player::applyClass(int choice)
         className = "Sorcier";
         emoji = "🧙‍♂️";
         life = 90;
-        strength = 7;
-        dexterity = 6;
         luck = 6;
         mana = 90;
 
@@ -213,8 +175,6 @@ void Player::applyClass(int choice)
         className = "Archer";
         emoji = "🏹";
         life = 105;
-        strength = 12;
-        dexterity = 12;
         luck = 6;
         mana = 35;
 
@@ -227,8 +187,6 @@ void Player::applyClass(int choice)
         className = "Voleur";
         emoji = "🗡️";
         life = 95;
-        strength = 11;
-        dexterity = 14;
         luck = 10;
         mana = 30;
 
@@ -241,8 +199,6 @@ void Player::applyClass(int choice)
         // se input errado, mantém Chevalier
         className = "Chevalier";
         life = 130;
-        strength = 16;
-        dexterity = 6;
         luck = 4;
         mana = 25;
 
@@ -322,11 +278,6 @@ int& Player::goldRef()
 void Player::addItemToInventory(const Item& it)
 {
     inventory.addItem(it);
-}
-
-int Player::getDexterity() const
-{
-    return dexterity;
 }
 
 int Player::getLuck() const

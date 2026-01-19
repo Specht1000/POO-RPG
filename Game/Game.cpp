@@ -3,12 +3,8 @@
 Game::Game()
 {
     srand(time(nullptr)); // RNG start
-    justInteracted = false;
-    loadMap("Maps/Map3.txt");
 
-    int hx, hy;
-    board.findHero(hx, hy);
-    player.setPosition(hx, hy);
+    loadMap("Maps/Map" + to_string((rand() % 3) + 1) + ".txt");
 }
 
 void Game::loadMap(const string& filename)
@@ -56,10 +52,24 @@ void Game::doTurnMenu()
     cout << "2. Inventaire (utiliser un objet)\n";
     cout << "3. Marchand\n";
     cout << "4. Quitter\n";
-    cout << "Choix: ";
 
     int choice;
-    cin >> choice;
+
+    while (true) {
+        cout << "Choix: ";
+        cin >> choice;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "Entrée invalide.\n";
+            continue;
+        }
+
+        if (choice >= 1 && choice <= 4) break;
+
+        cout << "Choix invalide.\n";
+    }
 
     if (choice == 1) {
         moveWithDice();
@@ -74,8 +84,14 @@ void Game::doTurnMenu()
 
 void Game::moveWithDice()
 {
+    int luck_bonus = player.getLuck() / 5;
     int steps = Dice::roll(6);
+
     cout << "\nDé = " << steps << " cases.\n";
+    cout << "Avec luck bonus = +" << luck_bonus << " cases.\n";
+
+    steps += luck_bonus;
+
     cout << "Utilisez WASD pour bouger (" << steps << " mouvements).\n";
     cout << "(Appuyez sur une touche puis ENTER)\n";
     cin.ignore();
@@ -377,8 +393,6 @@ void Game::chooseClass()
     cout << "\nClasse choisie: " << player.getClassName() << " " << player.getEmoji() << "\n";
     cout << "HP: " << player.getLife()
          << " | MP: " << player.getMana()
-         << " | Force: " << player.getStrength()
-         << " | Dex: " << player.getDexterity()
          << " | Luck: " << player.getLuck() << "\n";
 
     cout << "\nAppuyez sur ENTER...\n";

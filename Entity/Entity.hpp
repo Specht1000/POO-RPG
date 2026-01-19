@@ -9,15 +9,13 @@ class Entity {
 protected:
     string name;
     int life;
-    int strength;
 
 public:
-    Entity(const string& name, int life, int strength);
+    Entity(const string& name, int life);
     virtual ~Entity();
 
     bool isAlive() const;
     int getLife() const;
-    int getStrength() const;
 
     void takeDamage(int dmg);
 };

@@ -1,10 +1,9 @@
 #include "Entity.hpp"
 
-Entity::Entity(const string& name, int life, int strength)
+Entity::Entity(const string& name, int life)
 {
     this->name = name;
     this->life = life;
-    this->strength = strength;
 }
 
 Entity::~Entity() {}
@@ -15,10 +14,6 @@ bool Entity::isAlive() const {
 
 int Entity::getLife() const {
     return this->life;
-}
-
-int Entity::getStrength() const {
-    return this->strength;
 }
 
 void Entity::takeDamage(int dmg) {

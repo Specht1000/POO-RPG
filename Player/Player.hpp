@@ -13,7 +13,6 @@ using namespace std;
 
 class Player : public Entity {
 private:
-    int dexterity;
     int luck;
     int gold;
     Inventory inventory;
@@ -28,9 +27,7 @@ private:
 
 public:
     Player();
-    Player(const string& name);
 
-    void attack(Entity& enemy);
     bool useLuck();
 
     void addGold(int amount);
@@ -70,7 +67,6 @@ public:
 
     void addItemToInventory(const Item& it);
 
-    int getDexterity() const;
     int getLuck() const;
 };
 

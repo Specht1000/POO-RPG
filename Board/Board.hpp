@@ -18,7 +18,6 @@ private:
 
 public:
     Board();                       // par défaut
-    Board(const string& filename); // charger depuis fichier
 
     void loadFromFile(const string& filename);
     void display() const;

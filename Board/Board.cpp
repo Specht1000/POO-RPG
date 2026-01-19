@@ -11,16 +11,6 @@ Board::Board()
     floorEmoji = "  ";
 }
 
-Board::Board(const string& filename)
-{
-    heroEmoji = "🧑‍🚀";
-    enemyEmoji = "👾";
-    itemEmoji = "🎁";
-    wallEmoji = "🧱";
-    floorEmoji = "  ";
-    loadFromFile(filename);
-}
-
 void Board::loadFromFile(const string& filename)
 {
     map.clear();

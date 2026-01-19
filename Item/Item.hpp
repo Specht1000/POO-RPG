@@ -14,21 +14,17 @@ private:
     ItemType type;
     int value;
 
-    // ✅ novo (para marchand)
     string name;
     int price;
 
 public:
-    // ✅ mantém compatibilidade com teu código atual
     Item(ItemType type, int value);
 
-    // ✅ novo: item com nome + preço (para loja)
     Item(string name, ItemType type, int value, int price);
 
     ItemType getType() const;
     int getValue() const;
 
-    // ✅ novo
     string getName() const;
     int getPrice() const;
 
