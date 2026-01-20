@@ -4,7 +4,8 @@ Game::Game()
 {
     srand(time(nullptr)); // RNG start
 
-    loadMap("Maps/Map" + to_string((rand() % 3) + 1) + ".txt");
+    // loadMap("Maps/Map" + to_string((rand() % 3) + 1) + ".txt");
+    loadMap("Maps/Map1.txt");
 }
 
 void Game::loadMap(const string& filename)
@@ -365,8 +366,8 @@ void Game::chooseClass()
     cout << "Choisissez une classe:\n";
     cout << "1. Chevalier 🛡️ (HP haut, Force)\n";
     cout << "2. Sorcier 🧙 (MP haut, Magie)\n";
-    cout << "3. Archer 🏹 (Dex, critiques)\n";
-    cout << "4. Voleur 🗡️ (Dex/Luck)\n";
+    cout << "3. Archer 🏹 (Critiques)\n";
+    cout << "4. Voleur 🗡️ (Luck)\n";
 
     int choice = 0;
 

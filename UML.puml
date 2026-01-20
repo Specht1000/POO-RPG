@@ -165,26 +165,34 @@ class Board {
   + setHeroEmoji(e : string) : void
 }
 
-'====================
-' GAME (CONTROLEUR)
-'====================
 class Game {
-  - board : Board
-  - player : Player
-  - merchant : Merchant
-  + Game()
-  + run() : void
-  + loadMap(filename : string) : void
-  + loop() : void
-  + movePlayer(dx : int, dy : int) : bool
-  + combat(enemy : Enemy&) : void
+    - Board board
+    - Player player
+    - Merchant merchant
+    - int steps
+    + Game()
+    + void run()
+    + void loop()
+    + void chooseClass()
+    + void doTurnMenu()
+    + void moveWithDice()
+    + void useItemMenu()
+    + void openMerchant()
+    + Item generateRandomItem()
+    + bool movePlayer(int dx, int dy)
+    + void combat(Enemy& enemy)
+    + void loadMap(const string& filename)
+    + void checkEndGame()
+    + void showVictory()
+    + void showGameOver()
 }
 
-Game "1" *-- "1" Board
-Game "1" *-- "1" Player
-Game "1" *-- "1" Merchant
-Game ..> Enemy
-Game ..> Item
+Game --> Board
+Game --> Player
+Game --> Merchant
+Game --> Dice
+Game --> Item
+Game --> Enemy
 
 '====================
 ' UTILITAIRES
